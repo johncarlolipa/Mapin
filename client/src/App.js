@@ -7,9 +7,10 @@ import axios from "axios";
 import { format } from "timeago.js";
 
 function App() {
-  const currentUser = "jc low"
+  const currentUser = "jc low";
   const [pins, setPins] = React.useState([]);
   const [currentPlaceId, setCurrentPlaceId] = React.useState(null);
+  const [newPlace, setNewPlace] = React.useState(null);
 
   React.useEffect(() => {
     const getPins = async () => {
@@ -27,6 +28,15 @@ function App() {
     setCurrentPlaceId(id);
   };
 
+  const handleAddClick = (e) => {
+    const { lng, lat } = e.lngLat;
+    setNewPlace({
+      lat,
+      long: lng,
+    });
+  };
+
+
   return (
     <Map
       mapboxAccessToken={process.env.REACT_APP_MAPBOX}
@@ -37,12 +47,16 @@ function App() {
       }}
       style={{ width: "98vw", height: 1000 }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
+      onDblClick={handleAddClick}
     >
       {pins.map((pin, index) => (
         <React.Fragment key={index}>
           <Marker longitude={pin.long} latitude={pin.lat} anchor="bottom">
             <FmdGoodIcon
-              style={{ fontSize: visualViewport.zoom * 7, color: pin.username === currentUser ? "tomato" : "slateblue" }}
+              style={{
+                fontSize: 20,
+                color: pin.username === currentUser ? "tomato" : "slateblue",
+              }}
               onClick={() => handleMarkerClick(pin._id)}
               className="cursor-pointer"
             />
@@ -78,6 +92,18 @@ function App() {
           )}
         </React.Fragment>
       ))}
+      {newPlace && (
+        <Popup
+          longitude={newPlace.long}
+          latitude={newPlace.lat}
+          anchor="left"
+          closeButton={true}
+          closeOnClick={false}
+          onClose={() => setNewPlace(null)}
+        >
+          hello
+        </Popup>
+      )}
     </Map>
   );
 }
