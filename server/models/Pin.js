@@ -11,6 +11,10 @@ const PinSchema = new mongoose.Schema(
       require: true,
       min: 3,
     },
+    description: {
+      type: String,
+      require: true,
+    },
     rating: {
       type: Number,
       require: true,

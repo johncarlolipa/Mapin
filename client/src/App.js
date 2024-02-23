@@ -11,6 +11,9 @@ function App() {
   const [pins, setPins] = React.useState([]);
   const [currentPlaceId, setCurrentPlaceId] = React.useState(null);
   const [newPlace, setNewPlace] = React.useState(null);
+  const [title, setTitle] = React.useState(null);
+  const [description, setDescription] = React.useState(null);
+  const [rating, setRating] = React.useState(0);
 
   React.useEffect(() => {
     const getPins = async () => {
@@ -24,7 +27,7 @@ function App() {
     getPins();
   }, []);
 
-  const handleMarkerClick = (id) => {
+  const handleMarkerClick = (id, lat, lng) => {
     setCurrentPlaceId(id);
   };
 
@@ -36,6 +39,25 @@ function App() {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newPin = {
+      username: currentUser,
+      title,
+      description,
+      rating,
+      lat: newPlace.lat,
+      long: newPlace.long,
+    };
+
+    try {
+      const res = await axios.post("/pins", newPin);
+      setPins([...pins, res.data]);
+      setNewPlace(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Map
@@ -48,6 +70,7 @@ function App() {
       style={{ width: "98vw", height: 1000 }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
       onDblClick={handleAddClick}
+      transitionDuration="200"
     >
       {pins.map((pin, index) => (
         <React.Fragment key={index}>
@@ -57,7 +80,7 @@ function App() {
                 fontSize: 20,
                 color: pin.username === currentUser ? "tomato" : "slateblue",
               }}
-              onClick={() => handleMarkerClick(pin._id)}
+              onClick={() => handleMarkerClick(pin._id, pin.lat, pin.long)}
               className="cursor-pointer"
             />
           </Marker>
@@ -76,12 +99,7 @@ function App() {
                 <label>Review</label>
                 <p>{pin.description}</p>
                 <label>Rating</label>
-                <div>
-                  <Star />
-                  <Star />
-                  <Star />
-                  <Star />
-                </div>
+                <div>{Array(pin.rating).fill(<Star />)}</div>
                 <label>Information</label>
                 <span>
                   Created by <b>{pin.username}</b>
@@ -101,7 +119,32 @@ function App() {
           closeOnClick={false}
           onClose={() => setNewPlace(null)}
         >
-          hello
+          <div>
+            <form onSubmit={handleSubmit}>
+              <label>Title</label>
+              <input
+                placeholder="Enter a title"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <label>Review</label>
+              <textarea
+                placeholder="Say something about this place"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <label>Rating</label>
+              <select
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <button>Add Pin</button>
+            </form>
+          </div>
         </Popup>
       )}
     </Map>
