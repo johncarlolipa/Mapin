@@ -17,7 +17,7 @@ export default function Home({ currentUser }) {
   React.useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get("https://mapin-backend.vercel.app/api/pins");
+        const res = await axios.get("/pins");
         setPins(res.data);
       } catch (error) {
         console.log(error);
@@ -63,7 +63,7 @@ export default function Home({ currentUser }) {
   return (
     <div className="relative">
       <Map
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
+        mapboxAccessToken={process.env.REACT_APP_MAPBOX}
         initialViewState={{
           longitude: 46,
           latitude: 17,
@@ -76,18 +76,16 @@ export default function Home({ currentUser }) {
       >
         {Array.isArray(pins) && pins.map((pin, index) => (
           <React.Fragment key={index}>
-            {(!isNaN(pin.long) && !isNaN(pin.lat)) && (
-              <Marker longitude={pin.long} latitude={pin.lat} anchor="bottom">
-                <FmdGoodIcon
-                  style={{
-                    fontSize: 20,
-                    color: pin.username === currentUser ? "tomato" : "slateblue",
-                  }}
-                  onClick={() => handleMarkerClick(pin._id)}
-                  className="cursor-pointer"
-                />
-              </Marker>
-            )}
+            <Marker longitude={pin.long} latitude={pin.lat} anchor="bottom">
+              <FmdGoodIcon
+                style={{
+                  fontSize: 20,
+                  color: pin.username === currentUser ? "tomato" : "slateblue",
+                }}
+                onClick={() => handleMarkerClick(pin._id)}
+                className="cursor-pointer"
+              />
+            </Marker>
             {pin._id === currentPlaceId && (
               <Popup
                 longitude={pin.long}
