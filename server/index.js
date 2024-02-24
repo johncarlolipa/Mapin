@@ -10,8 +10,16 @@ app.use(express.json());
 
 // cors
 app.use(cors({
-  origin: 'https://mapin-p829.vercel.app/'
+  origin: 'https://mapin-p829.vercel.app',
+  credentials: true  // Allow credentials (cookies, authorization headers, etc.)
 }));
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 
 // middleware
 connectDB();
