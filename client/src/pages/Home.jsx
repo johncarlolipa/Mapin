@@ -103,21 +103,18 @@ export default function Home({ currentUser }) {
                   onClose={() => setCurrentPlaceId(null)}
                 >
                   <div className="px-4 py-2">
-                    <label className="block font-semibold text-red-100 text-lg">
+                    <label className="block font-semibold text-red-400 ">
                       Place
                     </label>
                     <h4 className="italic text-sm">{pin.title}</h4>
-                    <label className="block font-semibold text-red-200 text-sm">
+                    <label className="block font-semibold text-red-400">
                       Review
                     </label>
                     <p className="italic text-sm">{pin.description}</p>
-                    <label className="block font-semibold text-red-200 text-sm">
+                    <label className="block font-semibold text-red-400">
                       Rating
                     </label>
                     <div>{Array(pin.rating).fill(<Star />)}</div>
-                    <label className="block font-semibold text-red-200 text-sm">
-                      Information
-                    </label>
                     <div className="mt-4">
                       <span className="text-gray-400">
                         Created by{" "}
