@@ -106,23 +106,26 @@ export default function Home({ currentUser }) {
                     <label className="block font-semibold text-red-100 text-lg">
                       Place
                     </label>
-                    <h4>{pin.title}</h4>
-                    <label className="block font-semibold text-red-100 text-lg">
+                    <h4 className="italic text-sm">{pin.title}</h4>
+                    <label className="block font-semibold text-red-200 text-sm">
                       Review
                     </label>
-                    <p>{pin.description}</p>
-                    <label className="block font-semibold text-red-100 text-lg">
+                    <p className="italic text-sm">{pin.description}</p>
+                    <label className="block font-semibold text-red-200 text-sm">
                       Rating
                     </label>
                     <div>{Array(pin.rating).fill(<Star />)}</div>
-                    <label className="block font-semibold text-red-100 text-lg">
+                    <label className="block font-semibold text-red-200 text-sm">
                       Information
                     </label>
-                    <span className="">
-                      Created by <b className="italic text-blue-200">{pin.username}</b>
-                    </span>
-                    <div>
-                      <span>{format(pin.createdAt)}</span>
+                    <div className="mt-4">
+                      <span className="text-gray-400">
+                        Created by{" "}
+                        <b className="italic text-blue-400">{pin.username}</b>
+                      </span>
+                      <div>
+                        <span>{format(pin.createdAt)}</span>
+                      </div>
                     </div>
                   </div>
                 </Popup>
@@ -138,7 +141,7 @@ export default function Home({ currentUser }) {
             closeOnClick={false}
             onClose={() => setNewPlace(null)}
           >
-            <div className="p-6 bg-white rounded-lg shadow-md">
+            <div className="p-6 bg-white">
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label
