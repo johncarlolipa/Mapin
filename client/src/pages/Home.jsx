@@ -133,7 +133,7 @@ export default function Home({ currentUser }) {
                 <div className="mb-4">
                   <label
                     htmlFor="title"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-semibold text-gray-700"
                   >
                     Title
                   </label>
@@ -143,13 +143,13 @@ export default function Home({ currentUser }) {
                     placeholder="Enter a title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    className="w-full mt-1 border-black rounded-md shadow-sm focus:border-yellow-300 focus:ring focus:ring-yellow-200 focus:ring-opacity-50"
                   />
                 </div>
                 <div className="mb-4">
                   <label
                     htmlFor="review"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-semibold text-gray-700"
                   >
                     Review
                   </label>
@@ -158,13 +158,13 @@ export default function Home({ currentUser }) {
                     placeholder="Say something about this place"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    className="w-full mt-1 border-black rounded-md shadow-sm focus:border-yellow-300 focus:ring focus:ring-yellow-200 focus:ring-opacity-50"
                   />
                 </div>
                 <div className="mb-4">
                   <label
                     htmlFor="rating"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-semibold text-gray-700"
                   >
                     Rating
                   </label>
@@ -172,7 +172,7 @@ export default function Home({ currentUser }) {
                     id="rating"
                     value={rating}
                     onChange={(e) => setRating(e.target.value)}
-                    className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    className="w-full mt-1 border-black rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                   >
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -183,7 +183,7 @@ export default function Home({ currentUser }) {
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-2 px-4 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-md focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  className="w-full py-2 px-4 bg-yellow-100 hover:bg-yellow-200 text-black font-semibold rounded-md focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-opacity-50"
                 >
                   Add Pin
                 </button>
