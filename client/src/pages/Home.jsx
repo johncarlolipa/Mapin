@@ -102,7 +102,7 @@ export default function Home({ currentUser }) {
                   closeOnClick={false}
                   onClose={() => setCurrentPlaceId(null)}
                 >
-                  <div className="px-4 py-2">
+                  <div className="px-8 py-2">
                     <label className="block font-semibold text-red-400 ">
                       Place
                     </label>
