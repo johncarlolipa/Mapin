@@ -10,8 +10,8 @@ export default function Home({ currentUser }) {
   const [pins, setPins] = React.useState([]);
   const [currentPlaceId, setCurrentPlaceId] = React.useState(null);
   const [newPlace, setNewPlace] = React.useState(null);
-  const [title, setTitle] = React.useState(null);
-  const [description, setDescription] = React.useState(null);
+  const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
   const [rating, setRating] = React.useState(0);
 
   React.useEffect(() => {
@@ -72,7 +72,7 @@ export default function Home({ currentUser }) {
         onDblClick={handleAddClick}
         transitionDuration="200"
       >
-        {pins.map((pin, index) => (
+        {Array.isArray(pins) && pins.map((pin, index) => (
           <React.Fragment key={index}>
             <Marker longitude={pin.long} latitude={pin.lat} anchor="bottom">
               <FmdGoodIcon
@@ -80,7 +80,7 @@ export default function Home({ currentUser }) {
                   fontSize: 20,
                   color: pin.username === currentUser ? "tomato" : "slateblue",
                 }}
-                onClick={() => handleMarkerClick(pin._id, pin.lat, pin.long)}
+                onClick={() => handleMarkerClick(pin._id)}
                 className="cursor-pointer"
               />
             </Marker>
@@ -132,6 +132,7 @@ export default function Home({ currentUser }) {
                     id="title"
                     type="text"
                     placeholder="Enter a title"
+                    value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                   />
@@ -146,6 +147,7 @@ export default function Home({ currentUser }) {
                   <textarea
                     id="review"
                     placeholder="Say something about this place"
+                    value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                   />
