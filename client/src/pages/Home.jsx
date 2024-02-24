@@ -7,6 +7,7 @@ import axios from "axios";
 import { format } from "timeago.js";
 
 export default function Home({ currentUser }) {
+  const baseUrl = `${process.env.REACT_APP_SERVER_URL}/api/pins`;
   const [pins, setPins] = React.useState([]);
   const [currentPlaceId, setCurrentPlaceId] = React.useState(null);
   const [newPlace, setNewPlace] = React.useState(null);
@@ -17,7 +18,7 @@ export default function Home({ currentUser }) {
   React.useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get("https://mapin-backend.vercel.app/api/pins");
+        const res = await axios.get(baseUrl);
         setPins(res.data);
       } catch (error) {
         console.log(error);
