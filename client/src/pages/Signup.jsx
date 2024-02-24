@@ -19,7 +19,7 @@ export default function Signup() {
     };
 
     try {
-      await axios.post("/users/register", newUser);
+      await axios.post("https://mapin-backend.vercel.app/api/users/register", newUser);
       setError(false);
       setSuccess(true);
       navigate("/login")
