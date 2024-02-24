@@ -17,7 +17,7 @@ export default function Login({ storage, setUser }) {
     };
 
     try {
-      const res = await axios.post("users/login", user);
+      const res = await axios.post("https://mapin-backend.vercel.app/api/users/login", user);
       storage.setItem("user", res.data.username);
       setUser(res.data.username);
       setError(false);
