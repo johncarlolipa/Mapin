@@ -106,11 +106,11 @@ export default function Home({ currentUser }) {
                     <label className="block font-semibold text-red-400 ">
                       Place
                     </label>
-                    <h4 className="italic text-sm">{pin.title}</h4>
+                    <h4 className="italic text-sm mb-4">{pin.title}</h4>
                     <label className="block font-semibold text-red-400">
                       Review
                     </label>
-                    <p className="italic text-sm">{pin.description}</p>
+                    <p className="italic text-sm mb-4">{pin.description}</p>
                     <label className="block font-semibold text-red-400">
                       Rating
                     </label>
