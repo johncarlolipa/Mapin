@@ -17,7 +17,7 @@ export default function Login({ storage, setUser }) {
     };
 
     try {
-      const res = await axios.post("/users/login", user);
+      const res = await axios.post("/api/users/login", user);
       storage.setItem("user", res.data.username);
       setUser(res.data.username);
       setError(false);
@@ -27,6 +27,7 @@ export default function Login({ storage, setUser }) {
       setError(true);
     }
   };
+
 
   return (
     <div className="flex justify-center items-center h-screen">
