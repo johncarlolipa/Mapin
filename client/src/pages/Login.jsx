@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Login({ storage, setUser }) {
+  const [loading, setLoading] = useState(false); // Add loading state
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const nameRef = useRef();
@@ -16,6 +17,8 @@ export default function Login({ storage, setUser }) {
       password: passwordRef.current.value,
     };
 
+    setLoading(true); // Set loading state to true when submitting the form
+
     try {
       const res = await axios.post("https://mapin-backend.vercel.app/api/users/login", user);
       storage.setItem("user", res.data.username);
@@ -25,9 +28,10 @@ export default function Login({ storage, setUser }) {
       navigate("/");
     } catch (error) {
       setError(true);
+    } finally {
+      setLoading(false); // Set loading state back to false after request completes
     }
   };
-
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -55,8 +59,9 @@ export default function Login({ storage, setUser }) {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
+            disabled={loading}
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'} 
           </button>
         </div>
         {success && <p className="text-green-500">Successfully signed up!</p>}
