@@ -17,7 +17,9 @@ export default function Home({ currentUser }) {
   React.useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get("https://mapin-backend.vercel.app/api/pins");
+        const res = await axios.get(
+          "https://mapin-backend.vercel.app/api/pins"
+        );
         setPins(res.data);
       } catch (error) {
         console.log(error);
@@ -52,7 +54,10 @@ export default function Home({ currentUser }) {
     };
 
     try {
-      const res = await axios.post("https://mapin-backend.vercel.app/api/pins", newPin);
+      const res = await axios.post(
+        "https://mapin-backend.vercel.app/api/pins",
+        newPin
+      );
       setPins([...pins, res.data]);
       setNewPlace(null);
     } catch (error) {
@@ -74,44 +79,46 @@ export default function Home({ currentUser }) {
         onDblClick={handleAddClick}
         transitionDuration="200"
       >
-        {Array.isArray(pins) && pins.map((pin, index) => (
-          <React.Fragment key={index}>
-            <Marker longitude={pin.long} latitude={pin.lat} anchor="bottom">
-              <FmdGoodIcon
-                style={{
-                  fontSize: 20,
-                  color: pin.username === currentUser ? "tomato" : "slateblue",
-                }}
-                onClick={() => handleMarkerClick(pin._id)}
-                className="cursor-pointer"
-              />
-            </Marker>
-            {pin._id === currentPlaceId && (
-              <Popup
-                longitude={pin.long}
-                latitude={pin.lat}
-                anchor="left"
-                closeButton={true}
-                closeOnClick={false}
-                onClose={() => setCurrentPlaceId(null)}
-              >
-                <div className="px-4 py-2">
-                  <label className="block">Place</label>
-                  <h4>{pin.title}</h4>
-                  <label className="block">Review</label>
-                  <p>{pin.description}</p>
-                  <label className="block">Rating</label>
-                  <div>{Array(pin.rating).fill(<Star />)}</div>
-                  <label className="block">Information</label>
-                  <span>
-                    Created by <b>{pin.username}</b>
-                  </span>
-                  <span>{format(pin.createdAt)}</span>
-                </div>
-              </Popup>
-            )}
-          </React.Fragment>
-        ))}
+        {Array.isArray(pins) &&
+          pins.map((pin, index) => (
+            <React.Fragment key={index}>
+              <Marker longitude={pin.long} latitude={pin.lat} anchor="bottom">
+                <FmdGoodIcon
+                  style={{
+                    fontSize: 20,
+                    color:
+                      pin.username === currentUser ? "tomato" : "slateblue",
+                  }}
+                  onClick={() => handleMarkerClick(pin._id)}
+                  className="cursor-pointer"
+                />
+              </Marker>
+              {pin._id === currentPlaceId && (
+                <Popup
+                  longitude={pin.long}
+                  latitude={pin.lat}
+                  anchor="left"
+                  closeButton={true}
+                  closeOnClick={false}
+                  onClose={() => setCurrentPlaceId(null)}
+                >
+                  <div className="px-4 py-2">
+                    <label className="block">Place</label>
+                    <h4>{pin.title}</h4>
+                    <label className="block">Review</label>
+                    <p>{pin.description}</p>
+                    <label className="block">Rating</label>
+                    <div>{Array(pin.rating).fill(<Star />)}</div>
+                    <label className="block">Information</label>
+                    <span>
+                      Created by <b>{pin.username}</b>
+                    </span>
+                    <span>{format(pin.createdAt)}</span>
+                  </div>
+                </Popup>
+              )}
+            </React.Fragment>
+          ))}
         {newPlace && (
           <Popup
             longitude={newPlace.long}
