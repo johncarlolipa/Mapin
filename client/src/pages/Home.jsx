@@ -50,7 +50,7 @@ export default function Home({ currentUser }) {
     };
 
     try {
-      const res = await axios.post("/pins", newPin);
+      const res = await axios.post("https://mapin-backend.vercel.app/api/pins", newPin);
       setPins([...pins, res.data]);
       setNewPlace(null);
     } catch (error) {
