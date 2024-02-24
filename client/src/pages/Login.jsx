@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Login({ storage, setUser }) {
-  const baseUrl = `${process.env.REACT_APP_SERVER_URL}/api/users/login`;
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const nameRef = useRef();
@@ -18,7 +17,7 @@ export default function Login({ storage, setUser }) {
     };
 
     try {
-      const res = await axios.post(baseUrl, user);
+      const res = await axios.post("https://mapin-backend.vercel.app/api/users/login", user);
       storage.setItem("user", res.data.username);
       setUser(res.data.username);
       setError(false);
