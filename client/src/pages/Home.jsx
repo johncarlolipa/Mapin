@@ -6,8 +6,7 @@ import Star from "@mui/icons-material/Stars";
 import axios from "axios";
 import { format } from "timeago.js";
 
-export default function Home () {
-  const currentUser = "jc";
+export default function Home({ currentUser }) {
   const [pins, setPins] = React.useState([]);
   const [currentPlaceId, setCurrentPlaceId] = React.useState(null);
   const [newPlace, setNewPlace] = React.useState(null);
@@ -27,7 +26,7 @@ export default function Home () {
     getPins();
   }, []);
 
-  const handleMarkerClick = (id, lat, lng) => {
+  const handleMarkerClick = (id) => {
     setCurrentPlaceId(id);
   };
 
@@ -60,94 +59,128 @@ export default function Home () {
   };
 
   return (
-    <Map
-      mapboxAccessToken={process.env.REACT_APP_MAPBOX}
-      initialViewState={{
-        longitude: 46,
-        latitude: 17,
-        zoom: 4,
-      }}
-      style={{ width: "98vw", height: 1000 }}
-      mapStyle="mapbox://styles/mapbox/streets-v9"
-      onDblClick={handleAddClick}
-      transitionDuration="200"
-    >
-      {pins.map((pin, index) => (
-        <React.Fragment key={index}>
-          <Marker longitude={pin.long} latitude={pin.lat} anchor="bottom">
-            <FmdGoodIcon
-              style={{
-                fontSize: 20,
-                color: pin.username === currentUser ? "tomato" : "slateblue",
-              }}
-              onClick={() => handleMarkerClick(pin._id, pin.lat, pin.long)}
-              className="cursor-pointer"
-            />
-          </Marker>
-          {pin._id === currentPlaceId && (
-            <Popup
-              longitude={pin.long}
-              latitude={pin.lat}
-              anchor="left"
-              closeButton={true}
-              closeOnClick={false}
-              onClose={() => setCurrentPlaceId(null)}
-            >
-              <div>
-                <label>Place</label>
-                <h4>{pin.title}</h4>
-                <label>Review</label>
-                <p>{pin.description}</p>
-                <label>Rating</label>
-                <div>{Array(pin.rating).fill(<Star />)}</div>
-                <label>Information</label>
-                <span>
-                  Created by <b>{pin.username}</b>
-                </span>
-                <span>{format(pin.createdAt)}</span>
-              </div>
-            </Popup>
-          )}
-        </React.Fragment>
-      ))}
-      {newPlace && (
-        <Popup
-          longitude={newPlace.long}
-          latitude={newPlace.lat}
-          anchor="left"
-          closeButton={true}
-          closeOnClick={false}
-          onClose={() => setNewPlace(null)}
-        >
-          <div>
-            <form onSubmit={handleSubmit}>
-              <label>Title</label>
-              <input
-                placeholder="Enter a title"
-                onChange={(e) => setTitle(e.target.value)}
+    <div className="relative">
+      <Map
+        mapboxAccessToken={process.env.REACT_APP_MAPBOX}
+        initialViewState={{
+          longitude: 46,
+          latitude: 17,
+          zoom: 4,
+        }}
+        style={{ width: "98vw", height: 1000 }}
+        mapStyle="mapbox://styles/mapbox/streets-v9"
+        onDblClick={handleAddClick}
+        transitionDuration="200"
+      >
+        {pins.map((pin, index) => (
+          <React.Fragment key={index}>
+            <Marker longitude={pin.long} latitude={pin.lat} anchor="bottom">
+              <FmdGoodIcon
+                style={{
+                  fontSize: 20,
+                  color: pin.username === currentUser ? "tomato" : "slateblue",
+                }}
+                onClick={() => handleMarkerClick(pin._id, pin.lat, pin.long)}
+                className="cursor-pointer"
               />
-              <label>Review</label>
-              <textarea
-                placeholder="Say something about this place"
-                onChange={(e) => setDescription(e.target.value)}
-              />
-              <label>Rating</label>
-              <select
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
+            </Marker>
+            {pin._id === currentPlaceId && (
+              <Popup
+                longitude={pin.long}
+                latitude={pin.lat}
+                anchor="left"
+                closeButton={true}
+                closeOnClick={false}
+                onClose={() => setCurrentPlaceId(null)}
               >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-              <button>Add Pin</button>
-            </form>
-          </div>
-        </Popup>
-      )}
-{/* Navbar */}
-    </Map>
+                <div className="px-4 py-2">
+                  <label className="block">Place</label>
+                  <h4>{pin.title}</h4>
+                  <label className="block">Review</label>
+                  <p>{pin.description}</p>
+                  <label className="block">Rating</label>
+                  <div>{Array(pin.rating).fill(<Star />)}</div>
+                  <label className="block">Information</label>
+                  <span>
+                    Created by <b>{pin.username}</b>
+                  </span>
+                  <span>{format(pin.createdAt)}</span>
+                </div>
+              </Popup>
+            )}
+          </React.Fragment>
+        ))}
+        {newPlace && (
+          <Popup
+            longitude={newPlace.long}
+            latitude={newPlace.lat}
+            anchor="left"
+            closeButton={true}
+            closeOnClick={false}
+            onClose={() => setNewPlace(null)}
+          >
+            <div className="p-6 bg-white rounded-lg shadow-md">
+              <form onSubmit={handleSubmit}>
+                <div className="mb-4">
+                  <label
+                    htmlFor="title"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Title
+                  </label>
+                  <input
+                    id="title"
+                    type="text"
+                    placeholder="Enter a title"
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="review"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Review
+                  </label>
+                  <textarea
+                    id="review"
+                    placeholder="Say something about this place"
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="rating"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Rating
+                  </label>
+                  <select
+                    id="rating"
+                    value={rating}
+                    onChange={(e) => setRating(e.target.value)}
+                    className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+                <button
+                  type="submit"
+                  className="w-full py-2 px-4 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-md focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                >
+                  Add Pin
+                </button>
+              </form>
+            </div>
+          </Popup>
+        )}
+      </Map>
+    </div>
   );
 }
