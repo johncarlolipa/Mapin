@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require('cors');
 const connectDB = require("./connectDB");
 const app = express();
 const pinRoute = require("./routes/pins");
@@ -7,7 +8,10 @@ const userRoute = require("./routes/users");
 
 app.use(express.json());
 
-
+// cors
+app.use(cors({
+  origin: 'https://mapin-p829.vercel.app/' // Replace with your frontend domain
+}));
 
 // middleware
 connectDB();
