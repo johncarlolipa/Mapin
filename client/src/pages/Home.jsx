@@ -103,17 +103,27 @@ export default function Home({ currentUser }) {
                   onClose={() => setCurrentPlaceId(null)}
                 >
                   <div className="px-4 py-2">
-                    <label className="block">Place</label>
+                    <label className="block font-semibold text-red-100 text-lg">
+                      Place
+                    </label>
                     <h4>{pin.title}</h4>
-                    <label className="block">Review</label>
+                    <label className="block font-semibold text-red-100 text-lg">
+                      Review
+                    </label>
                     <p>{pin.description}</p>
-                    <label className="block">Rating</label>
+                    <label className="block font-semibold text-red-100 text-lg">
+                      Rating
+                    </label>
                     <div>{Array(pin.rating).fill(<Star />)}</div>
-                    <label className="block">Information</label>
-                    <span>
-                      Created by <b>{pin.username}</b>
+                    <label className="block font-semibold text-red-100 text-lg">
+                      Information
+                    </label>
+                    <span className="">
+                      Created by <b className="italic text-blue-200">{pin.username}</b>
                     </span>
-                    <span>{format(pin.createdAt)}</span>
+                    <div>
+                      <span>{format(pin.createdAt)}</span>
+                    </div>
                   </div>
                 </Popup>
               )}
