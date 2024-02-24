@@ -19,7 +19,7 @@ export default function Signup() {
     };
 
     try {
-      await axios.post("/users/register", newUser);
+      await axios.post("/register", newUser);
       setError(false);
       setSuccess(true);
       navigate("/login")
