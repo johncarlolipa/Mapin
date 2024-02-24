@@ -17,7 +17,7 @@ export default function Home({ currentUser }) {
   React.useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get("/pins");
+        const res = await axios.get("https://mapin-backend.vercel.app/api/pins");
         setPins(res.data);
       } catch (error) {
         console.log(error);
@@ -32,10 +32,12 @@ export default function Home({ currentUser }) {
 
   const handleAddClick = (e) => {
     const { lng, lat } = e.lngLat;
-    setNewPlace({
-      lat,
-      long: lng,
-    });
+    if (!isNaN(lng) && !isNaN(lat)) {
+      setNewPlace({
+        lat,
+        long: lng,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -61,7 +63,7 @@ export default function Home({ currentUser }) {
   return (
     <div className="relative">
       <Map
-        mapboxAccessToken={process.env.REACT_APP_MAPBOX}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
         initialViewState={{
           longitude: 46,
           latitude: 17,
@@ -74,16 +76,18 @@ export default function Home({ currentUser }) {
       >
         {Array.isArray(pins) && pins.map((pin, index) => (
           <React.Fragment key={index}>
-            <Marker longitude={pin.long} latitude={pin.lat} anchor="bottom">
-              <FmdGoodIcon
-                style={{
-                  fontSize: 20,
-                  color: pin.username === currentUser ? "tomato" : "slateblue",
-                }}
-                onClick={() => handleMarkerClick(pin._id)}
-                className="cursor-pointer"
-              />
-            </Marker>
+            {(!isNaN(pin.long) && !isNaN(pin.lat)) && (
+              <Marker longitude={pin.long} latitude={pin.lat} anchor="bottom">
+                <FmdGoodIcon
+                  style={{
+                    fontSize: 20,
+                    color: pin.username === currentUser ? "tomato" : "slateblue",
+                  }}
+                  onClick={() => handleMarkerClick(pin._id)}
+                  className="cursor-pointer"
+                />
+              </Marker>
+            )}
             {pin._id === currentPlaceId && (
               <Popup
                 longitude={pin.long}
