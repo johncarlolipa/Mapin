@@ -17,7 +17,7 @@ export default function Home({ currentUser }) {
   React.useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get("/pins");
+        const res = await axios.get("https://mapin-backend.vercel.app/api/pins");
         setPins(res.data);
       } catch (error) {
         console.log(error);
