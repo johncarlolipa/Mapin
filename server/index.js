@@ -11,7 +11,7 @@ app.use(express.json());
 // cors
 app.use(cors({
   origin: 'https://mapin-p829.vercel.app',
-  credentials: true  // Allow credentials (cookies, authorization headers, etc.)
+  credentials: true
 }));
 
 app.use((req, res, next) => {
