@@ -10,7 +10,7 @@ app.use(express.json());
 
 // cors
 app.use(cors({
-  origin: 'https://mapin-p829.vercel.app/' // Replace with your frontend domain
+  origin: 'https://mapin-p829.vercel.app/'
 }));
 
 // middleware
